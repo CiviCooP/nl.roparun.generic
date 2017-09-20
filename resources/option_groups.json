@@ -1,0 +1,88 @@
+{
+	"participant_role": {
+		"name": "participant_role",
+		"title": "Rol van deelnemers",
+		"option_values": {
+			"Team": {
+				"name": "Team",
+				"label": "Team",
+				"is_active": 1
+			}
+		}
+	},
+	"start_locations": {
+		"name": "start_locations",
+		"title": "Startlocatie",
+		"option_values": {
+			"Hamburg": {
+				"label": "Hamburg",
+				"value": "1",
+				"name": "Hamburg",
+				"is_default": "0",
+				"weight": "1",
+				"is_optgroup": "0",
+				"is_reserved": "0",
+				"is_active": "1"
+			},
+			"Parijs": {
+				"label": "Parijs",
+				"value": "2",
+				"name": "Parijs",
+				"is_default": "0",
+				"weight": "2",
+				"is_optgroup": "0",
+				"is_reserved": "0",
+				"is_active": "1"
+			}
+		}
+	},
+	"team_target": {
+		"name": "team_target",
+		"title": "Doel Team",
+		"data_type": "String",
+		"is_reserved": "1",
+		"is_active": "1",
+		"option_values": {
+			"Zoveel_mogelijk_geld_ophalen": {
+				"label": "Zoveel mogelijk geld ophalen",
+				"value": "1",
+				"name": "Zoveel_mogelijk_geld_ophalen",
+				"is_default": "0",
+				"weight": "1",
+				"is_optgroup": "0",
+				"is_reserved": "0",
+				"is_active": "1"
+			},
+			"Zo_snel_mogelijk_afstand_aflegg": {
+				"label": "Zo snel mogelijk afstand afleggen",
+				"value": "2",
+				"name": "Zo_snel_mogelijk_afstand_aflegg",
+				"is_default": "0",
+				"weight": "2",
+				"is_optgroup": "0",
+				"is_reserved": "0",
+				"is_active": "1"
+			},
+			"Teambuilding": {
+				"label": "Teambuilding",
+				"value": "3",
+				"name": "Teambuilding",
+				"is_default": "0",
+				"weight": "3",
+				"is_optgroup": "0",
+				"is_reserved": "0",
+				"is_active": "1"
+			},
+			"Anders": {
+				"label": "Anders, nl. ...",
+				"value": "4",
+				"name": "Anders_nl_",
+				"is_default": "0",
+				"weight": "4",
+				"is_optgroup": "0",
+				"is_reserved": "0",
+				"is_active": "1"
+			}
+		}
+	}
+}
