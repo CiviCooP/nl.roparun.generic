@@ -11,8 +11,5 @@
  * @throws API_Exception
  */
 function civicrm_api3_civiconfig_load_roparun($params) {
-	$path = realpath(__DIR__ . '/../../../');
-	return civicrm_api3('Civiconfig', 'load_json', array(
-			'path' => $path . '/resources/', 
-		));
+	return _generic_load_config_items();
 }

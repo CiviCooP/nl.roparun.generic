@@ -27,7 +27,7 @@ function generic_civicrm_xmlMenu(&$files) {
  */
 function generic_civicrm_install() {
 	_generic_required_extensions_installed();
-	civicrm_api3('Civiconfig', 'load_roparun', array());
+	_generic_load_config_items();
   _generic_civix_civicrm_install();
 }
 
@@ -56,7 +56,7 @@ function generic_civicrm_uninstall() {
  */
 function generic_civicrm_enable() {
 	_generic_required_extensions_installed();
-	civicrm_api3('Civiconfig', 'load_roparun', array());
+	_generic_load_config_items();
   _generic_civix_civicrm_enable();
 }
 
@@ -87,7 +87,7 @@ function generic_civicrm_upgrade($op, CRM_Queue_Queue $queue = NULL) {
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_managed
  */
 function generic_civicrm_managed(&$entities) {
-	civicrm_api3('Civiconfig', 'load_roparun', array());
+	_generic_load_config_items();
   _generic_civix_civicrm_managed($entities);
 }
 
@@ -125,6 +125,13 @@ function generic_civicrm_angularModules(&$angularModules) {
  */
 function generic_civicrm_alterSettingsFolders(&$metaDataFolders = NULL) {
   _generic_civix_civicrm_alterSettingsFolders($metaDataFolders);
+}
+
+function _generic_load_config_items() {
+	$path = realpath(__DIR__);
+	return civicrm_api3('Civiconfig', 'load_json', array(
+		'path' => $path . '/resources/', 
+	));
 }
 
 /**
