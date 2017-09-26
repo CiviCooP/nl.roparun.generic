@@ -15,6 +15,102 @@
 			}
 		}
 	},
+	"team_roles": {
+		"name": "team_roles",
+		"title": "Team rollen",
+		"option_values": {
+				"Teamcaptain": {
+            "label": "Teamcaptain",
+            "value": "Teamcaptain",
+            "name": "Teamcaptain",
+            "is_default": "0",
+            "weight": "1",
+            "is_optgroup": "0",
+            "is_reserved": "1",
+            "is_active": "1"
+        },
+        "Chaffeur": {
+            "label": "Chaffeur",
+            "value": "Chaffeur",
+            "name": "Chaffeur",
+            "is_default": "0",
+            "weight": "2",
+            "is_optgroup": "0",
+            "is_reserved": "1",
+            "is_active": "1"
+        },
+        "Motorrijder": {
+            "label": "Motorrijder",
+            "value": "Motorrijder",
+            "name": "Motorrijder",
+            "is_default": "0",
+            "weight": "3",
+            "is_optgroup": "0",
+            "is_reserved": "1",
+            "is_active": "1"
+        },
+        "Fietser": {
+            "label": "Fietser",
+            "value": "Fietser",
+            "name": "Fietser",
+            "is_default": "0",
+            "weight": "4",
+            "is_optgroup": "0",
+            "is_reserved": "1",
+            "is_active": "1"
+        },
+        "Loper": {
+            "label": "Loper",
+            "value": "Loper",
+            "name": "Loper",
+            "is_default": "0",
+            "weight": "5",
+            "is_optgroup": "0",
+            "is_reserved": "1",
+            "is_active": "1"
+        },
+        "Masseur": {
+            "label": "Masseur",
+            "value": "Masseur",
+            "name": "Masseur",
+            "is_default": "0",
+            "weight": "6",
+            "is_optgroup": "0",
+            "is_reserved": "1",
+            "is_active": "1"
+        },
+        "Verzorger": {
+            "label": "Verzorger",
+            "value": "Verzorger",
+            "name": "Verzorger",
+            "is_default": "0",
+            "weight": "7",
+            "is_optgroup": "0",
+            "is_reserved": "1",
+            "is_active": "1"
+        },
+        "Overig": {
+            "label": "Overig",
+            "value": "Overig",
+            "name": "Overig",
+            "is_default": "0",
+            "weight": "8",
+            "is_optgroup": "0",
+            "is_reserved": "1",
+            "is_active": "1"
+        },
+        "Onbekend": {
+            "label": "Onbekend",
+            "value": "Onbekend",
+            "name": "Onbekend",
+            "is_default": "0",
+            "weight": "8",
+            "is_optgroup": "0",
+            "is_reserved": "1",
+            "is_active": "1"
+        }
+		}
+	},
 	"anonymous_donation": {
 		"name": "anonymous_donation",
 		"title": "Anoniem doneren",
