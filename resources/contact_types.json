@@ -4,5 +4,11 @@
       "name": "Team",
       "label":"Team",
       "parent_id":3
-    }
+    },
+  "Teamlid":
+    {
+      "name": "Teamlid",
+      "label":"Teamlid",
+      "parent_id":1
+    },
 }

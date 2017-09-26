@@ -258,32 +258,16 @@
 		"collapse_adv_display": "0",
 		"is_reserved": "1",
 		"is_public": "1",
-		"fields": {
-			"role": {
-				"name": "role",
-				"label": "Functie",
-				"data_type": "String",
-				"html_type": "Text",
-				"is_required": "1",
-				"is_searchable": "1",
-				"is_search_range": "0",
-				"weight": "13",
-				"is_active": "1",
-				"is_view": "0",
-				"text_length": "255",
-				"note_columns": "60",
-				"note_rows": "4",
-				"column_name": "role"
-			},
+		"fields": {			
 			"team_member_of_team": {
 				"name": "team_member_of_team",
 				"label": "Lid van team",
 				"data_type": "ContactReference",
 				"html_type": "Autocomplete-Select",
-				"is_required": "0",
+				"is_required": "1",
 				"is_searchable": "1",
 				"is_search_range": "0",
-				"weight": "6",
+				"weight": "1",
 				"is_active": "1",
 				"is_view": "0",
 				"text_length": "255",
@@ -292,6 +276,22 @@
 				"column_name": "team_member_of_team",
 				"filter": "action=get&contact_sub_type=Team",
 				"in_selector": "0"
+			},
+			"role": {
+				"name": "role",
+				"label": "Functie",
+				"data_type": "String",
+				"html_type": "Text",
+				"is_required": "1",
+				"is_searchable": "1",
+				"is_search_range": "0",
+				"weight": "2",
+				"is_active": "1",
+				"is_view": "0",
+				"text_length": "255",
+				"note_columns": "60",
+				"note_rows": "4",
+				"column_name": "role"
 			}
 		}
 	}
