@@ -81,6 +81,45 @@
 			}
 		}
 	},
+	"donor_information": {
+		"name": "donor_information",
+    "title": "Donateur",
+    "extends": "Contribution",
+    "extends_entity_column_value": [
+        "Donatie"
+    ],
+    "style": "Inline",
+    "collapse_display": "0",
+    "weight": "12",
+    "is_active": "1",
+    "table_name": "civicrm_value_donateur",
+    "is_multiple": "0",
+    "collapse_adv_display": "0",
+    "created_id": "3",
+    "created_date": "20170913 122345",
+    "is_reserved": "0",
+    "is_public": "1",
+    "fields": {
+    	"anonymous": {
+    		"name": "anonymous",
+      	"label": "Anoniem doneren",
+      	"data_type": "String",
+      	"html_type": "Select",
+      	"is_required": "0",
+      	"is_searchable": "1",
+      	"is_search_range": "0",
+      	"weight": "3",
+      	"is_active": "1",
+      	"is_view": "0",
+      	"text_length": "255",
+      	"note_columns": "60",
+      	"note_rows": "4",
+      	"column_name": "anonymous",
+      	"option_group": "anonymous_donation",
+      	"in_selector": "0"
+      }
+    }
+	},
 	"team_data": {
 		"name": "team_data",
 		"title": "Roparun Teamgegevens",
@@ -201,6 +240,59 @@
 			"note_rows": "4",
 			"column_name": "number_team_members",
 			"in_selector": "0"
+		}
+	},
+	"team_member_data": {
+		"name": "team_member_data",
+		"title": "Roparun teamlid",
+		"extends": "ParticipantRole",
+		"extends_entity_column_value": [
+			"team_member"
+		],
+		"style": "Inline",
+		"collapse_display": "0",
+		"weight": "6",
+		"is_active": "1",
+		"table_name": "civicrm_value_team_member",
+		"is_multiple": "0",
+		"collapse_adv_display": "0",
+		"is_reserved": "1",
+		"is_public": "1",
+		"fields": {
+			"role": {
+				"name": "role",
+				"label": "Functie",
+				"data_type": "String",
+				"html_type": "Text",
+				"is_required": "1",
+				"is_searchable": "1",
+				"is_search_range": "0",
+				"weight": "13",
+				"is_active": "1",
+				"is_view": "0",
+				"text_length": "255",
+				"note_columns": "60",
+				"note_rows": "4",
+				"column_name": "role"
+			},
+			"team_member_of_team": {
+				"name": "team_member_of_team",
+				"label": "Lid van team",
+				"data_type": "ContactReference",
+				"html_type": "Autocomplete-Select",
+				"is_required": "0",
+				"is_searchable": "1",
+				"is_search_range": "0",
+				"weight": "6",
+				"is_active": "1",
+				"is_view": "0",
+				"text_length": "255",
+				"note_columns": "60",
+				"note_rows": "4",
+				"column_name": "team_member_of_team",
+				"filter": "action=get&contact_sub_type=Team",
+				"in_selector": "0"
+			}
 		}
 	}
 }

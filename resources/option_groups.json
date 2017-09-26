@@ -7,7 +7,38 @@
 				"name": "Team",
 				"label": "Team",
 				"is_active": 1
+			},
+			"Teamlid": {
+				"name": "team_member",
+				"label": "Teamlid",
+				"is_active": 1
 			}
+		}
+	},
+	"anonymous_donation": {
+		"name": "anonymous_donation",
+		"title": "Anoniem doneren",
+		"option_values": {
+				"anonymous": {
+            "label": "Anoniem",
+            "value": "1",
+            "name": "anonymous",
+            "is_default": "0",
+            "weight": "1",
+            "is_optgroup": "0",
+            "is_reserved": "1",
+            "is_active": "1"
+        },
+        "mention_name": {
+            "label": "Je mag mijn naam vermelden",
+            "value": "2",
+            "name": "mention_name",
+            "is_default": "0",
+            "weight": "2",
+            "is_optgroup": "0",
+            "is_reserved": "1",
+            "is_active": "1"
+        }
 		}
 	},
 	"start_locations": {

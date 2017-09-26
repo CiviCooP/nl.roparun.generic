@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Donatie",
+    "is_deductible": "1",
+    "is_reserved": "0",
+    "is_active": "1"
+  },
+  {
+    "name": "Opbrengst collecte",
+    "is_deductible": "1",
+    "is_reserved": "0",
+    "is_active": "1"
+  },
+  {
+    "name": "Opbrengst lotterij",
+    "is_deductible": "1",
+    "is_reserved": "0",
+    "is_active": "1"
+  },
+  {
+  	"name": "Kosten deelname evenement",
+    "is_deductible": "0",
+    "is_reserved": "0",
+    "is_active": "1"
+  },
+  {
+    "name": "Contributie",
+    "is_deductible": "1",
+    "is_reserved": "0",
+    "is_active": "0"
+  },
+  {
+  	"name": "Bijdrage via campagne",
+    "is_deductible": "0",
+    "is_reserved": "0",
+    "is_active": "0"
+  }
+]
