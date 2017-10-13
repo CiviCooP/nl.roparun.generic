@@ -30,9 +30,9 @@
             "is_active": "1"
         },
         "Chaffeur": {
-            "label": "Chaffeur",
-            "value": "Chaffeur",
-            "name": "Chaffeur",
+            "label": "Chauffeur",
+            "value": "Chauffeur",
+            "name": "Chauffeur",
             "is_default": "0",
             "weight": "2",
             "is_optgroup": "0",
@@ -135,6 +135,58 @@
             "is_reserved": "1",
             "is_active": "1"
         }
+		}
+	},
+	"show_participant_on_website": {
+		"name": "show_participant_on_website",
+		"title": "Toon deelnemer op de website",
+		"option_values": {
+			"show_participant_on_website": {
+				"label": "Toon deelnemer op de website",
+				"value": "1",
+				"name": "show_participant_on_website",
+				"is_default": "1",
+				"weight": "1",
+				"is_optgroup": "0",
+				"is_reserved": "0",
+				"is_active": "1"
+			},
+			"hide_participant_on_website": {
+				"label": "Verberg deelnemer op de website",
+				"value": "0",
+				"name": "hide_participant_on_website",
+				"is_default": "0",
+				"weight": "2",
+				"is_optgroup": "0",
+				"is_reserved": "0",
+				"is_active": "1"
+			}
+		}
+	},
+	"participant_donation_state": {
+		"name": "participant_donation_state",
+		"title": "Donatiestatus voor de deelnemer",
+		"option_values": {
+			"participant_donation_enabled": {
+				"label": "Er kan gedoneerd worden op naam van deze deelnemer",
+				"value": "1",
+				"name": "participant_donation_enabled",
+				"is_default": "1",
+				"weight": "1",
+				"is_optgroup": "0",
+				"is_reserved": "0",
+				"is_active": "1"
+			},
+			"participant_donation_disabled": {
+				"label": "Schakel doneren op naam van deze deelnemer uit",
+				"value": "0",
+				"name": "participant_donation_disabled",
+				"is_default": "0",
+				"weight": "2",
+				"is_optgroup": "0",
+				"is_reserved": "0",
+				"is_active": "1"
+			}
 		}
 	},
 	"start_locations": {
