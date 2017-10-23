@@ -85,8 +85,6 @@ class CRM_Generic_Teamstanden {
 			$config = CRM_Generic_Config::singleton();
 		
 			$financialTypeIds[] = $config->getDonatieFinancialTypeId();
-			$financialTypeIds[] = $config->getCollecteFinancialTypeId();
-			$financialTypeIds[] = $config->getLoterijFinancialTypeId();
 		
 			$sql = "
 				SELECT SUM(total_amount) 
