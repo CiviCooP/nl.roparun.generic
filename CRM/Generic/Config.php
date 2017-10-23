@@ -195,11 +195,11 @@ class CRM_Generic_Config {
 		}
 		try {
 			$this->_loterijFinancialTypeId = civicrm_api3('FinancialType', 'getvalue', array(
-				'name' => 'Opbrengst lotterij',
+				'name' => 'Opbrengst loterij',
 				'return' => 'id',
 			));
 		} catch (Exception $e) {
-			throw new Exception('Could not retrieve financial type Opbrengst lotterij');
+			throw new Exception('Could not retrieve financial type Opbrengst loterij');
 		}
 	}
 
