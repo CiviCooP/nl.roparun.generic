@@ -19,6 +19,7 @@ class CRM_Generic_Config {
 	private $_donatieFinancialTypeId;
 	private $_collecteFinancialTypeId;
 	private $_loterijFinancialTypeId;
+  private $_smsDonatieFinancialTypeId;
 	private $_completedContributionStatusId;
 	private $_teamParticipantRoleId;
 	private $_teamMemberParticipantRoleId;
@@ -291,6 +292,13 @@ class CRM_Generic_Config {
 	public function getDonatieFinancialTypeId() {
 		return $this->_donatieFinancialTypeId;
 	}
+  
+  /**
+   * Getter for sms donation financial type id.
+   */
+  public function getSmsDonatieFinancialTypeId() {
+    return $this->_smsDonatieFinancialTypeId;
+  }
 	
 	/**
 	 * Getter for collecte financial type id.
@@ -394,6 +402,14 @@ class CRM_Generic_Config {
 		} catch (Exception $e) {
 			throw new Exception('Could not retrieve financial type Opbrengst loterij');
 		}
+    try {
+      $this->_smsDonatieFinancialTypeId = civicrm_api3('FinancialType', 'getvalue', array(
+        'name' => 'Opbrengst SMS donaties',
+        'return' => 'id',
+      ));
+    } catch (Exception $e) {
+      throw new Exception('Could not retrieve financial type Opbrengst SMS donaties');
+    }
 	}
 
 	private function loadCustomGroups() {
