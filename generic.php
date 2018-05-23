@@ -2,6 +2,19 @@
 
 require_once 'generic.civix.php';
 
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+
+use CRM_Generic_ExtensionUtil as E;
+
+/**
+ * Implements hook_civicrm_container()
+ *
+ * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_container/
+ */
+function generic_civicrm_container(ContainerBuilder $container) {
+  $container->addCompilerPass(new \Civi\Roparun\ActionProvider\CompilerPass\Actions);
+}
+
 /**
  * Implements hook_civicrm_config().
  *

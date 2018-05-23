@@ -18,6 +18,9 @@
   <compatibility>
     <ver>4.7</ver>
   </compatibility>
+  <classloader>
+    <psr4 prefix="Civi\" path="Civi" />
+  </classloader>
   <civix>
     <namespace>CRM/Generic</namespace>
   </civix>

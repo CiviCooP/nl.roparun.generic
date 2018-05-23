@@ -4,6 +4,10 @@ class CRM_Generic_Config {
 	
 	private static $singleton;
 	
+  private $_teamMemberDataCustomGroupId;
+  private $_teamMemberDataCustomGroupTableName;
+  private $_memberOfTeamCustomFieldId;
+  private $_memberOfTeamCustomFieldColumnName;
 	private $_teamDataCustomGroupId;
 	private $_teamDataCustomGroupTableName;
 	private $_teamNrCustomFieldId;
@@ -153,6 +157,34 @@ class CRM_Generic_Config {
 	public function getTowardsTeamMemberCustomFieldColumnName() {
 		return $this->_towardsTeamMemberCustomFieldColumnName;
 	}
+  
+  /**
+   * Getter for the custom group id of custom group team_member_data.
+   */
+  public function getTeamMemberDataCustomGroupId() {
+    return $this->_teamMemberDataCustomGroupId;
+  }
+  
+  /**
+   * Getter for the table name of the custom group team_member_data.
+   */
+  public function getTeamMemberDataCustomGroupTableName() {
+    return $this->_teamMemberDataCustomGroupTableName;
+  }
+  
+  /**
+   * Getter for the custom field id of the custom field team_member_of_team.
+   */
+  public function getMemberOfTeamCustomFieldId() {
+    return $this->_memberOfTeamCustomFieldId;
+  }
+  
+  /**
+   * Getter for the column name of the custom field team_member_of_team.
+   */
+  public function getMemberOfTeamCustomFieldColumnName() {
+    return $this->_memberOfTeamCustomFieldColumnName;
+  }
 	
 	/**
 	 * Getter for completed contribution status id.
@@ -309,6 +341,20 @@ class CRM_Generic_Config {
 		} catch (Exception $ex) {
 			throw new Exception('Could not find custom field Towards Team Member');
 		}
+    try {
+      $_teamMemberCustomGroup = civicrm_api3('CustomGroup', 'getsingle', array('name' => 'team_member_data'));
+      $this->_teamMemberDataCustomGroupId = $_teamMemberCustomGroup['id'];
+      $this->_teamMemberDataCustomGroupTableName = $_teamMemberCustomGroup['table_name'];
+    } catch (Exception $ex) {
+      throw new Exception('Could not find custom group for Team Member Data');
+    }
+    try {
+      $_memberOfTeamCustomField = civicrm_api3('CustomField', 'getsingle', array('name' => 'team_member_of_team', 'custom_group_id' => $this->_teamMemberDataCustomGroupId));
+      $this->_memberOfTeamCustomFieldColumnName = $_memberOfTeamCustomField['column_name'];
+      $this->_memberOfTeamCustomFieldId = $_memberOfTeamCustomField['id'];
+    } catch (Exception $ex) {
+      throw new Exception('Could not find custom field Member of Team');
+    }
 	}
 	
 }
