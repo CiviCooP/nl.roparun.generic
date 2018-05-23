@@ -23,13 +23,27 @@ class CRM_Generic_Config {
 	private $_donatieFinancialTypeId;
 	private $_collecteFinancialTypeId;
 	private $_loterijFinancialTypeId;
+  private $_smsDonatieFinancialTypeId;
 	private $_completedContributionStatusId;
 	private $_teamParticipantRoleId;
+	private $_teamMemberParticipantRoleId;
+	private $_teamMemberParticipantActiveStatusIds;
 	private $_roparunEventTypeId;
 	private $_roparunEventCustomGroupId;
 	private $_roparunEventCustomGroupTableName;
 	private $_endDateDonationsCustomFieldId;
 	private $_endDateDonationsCustomFieldColumnName;
+	private $_teamMemberDataCustomGroupId;
+	private $_teamMemberDataCustomGroupTableName;
+	private $_memberOfTeamCustomFieldId;
+	private $_memberOfTeamCustomFieldColumnName;
+	private $_teamRoleCustomFieldId;
+	private $_teamRoleCustomFieldColumnName;
+	private $_donorInformationCustomGroupId;
+	private $_donorInformationCustomGroupTableName;
+	private $_donateAnoymousCustomFieldId;
+	private $_donateAnonymousCustomFieldColumnName;
+	private $_donateAnonymousOptionValue;
 	
 	private function __construct() {
 		$this->loadCustomGroups();
@@ -52,6 +66,24 @@ class CRM_Generic_Config {
 		} catch (Exception $ex) {
 			throw new Exception ('Could not retrieve the Team participant role');
 		}
+		try {
+			$this->_teamMemberParticipantRoleId = civicrm_api3('OptionValue', 'getvalue', array(
+				'return' => 'value',
+				'name' => 'team_member',
+				'option_group_id' => 'participant_role',
+			));
+		} catch (Exception $ex) {
+			throw new Exception ('Could not retrieve the Team participant role');
+		}
+		try {
+			$this->_teamMemberParticipantActiveStatusIds = array();
+			$status_ids = civicrm_api3('ParticipantStatusType', 'get', array('is_counted' => 1, 'options' => array('limit' => 0)));
+			foreach($status_ids['values'] as $status) {
+				$this->_teamMemberParticipantActiveStatusIds[] = $status['id'];	
+			}
+		} catch (Exception $e) {
+			throw new Exception('Could not find active participant statuses');
+		}
 		
 		try {
 			$this->_completedContributionStatusId = civicrm_api3('OptionValue', 'getvalue', array(
@@ -61,6 +93,15 @@ class CRM_Generic_Config {
 			));
 		} catch (Exception $ex) {
 			throw new Exception ('Could not retrieve the Contribution status completed');
+		}
+		try {
+			$this->_donateAnonymousOptionValue = civicrm_api3('OptionValue', 'getvalue', array(
+				'return' => 'value',
+				'name' => 'anonymous',
+				'option_group_id' => 'anonymous_donation',
+			));
+		} catch (Exception $ex) {
+			throw new Exception ('Could not retrieve the option value Anonymous for option group anonymous donation');
 		}
 	}
 	
@@ -187,6 +228,90 @@ class CRM_Generic_Config {
   }
 	
 	/**
+	 * Getter for the custom group id of custom group team_member_data.
+	 */
+	public function getTeamMemberDataCustomGroupId() {
+		return $this->_teamMemberDataCustomGroupId;
+	}
+	
+	/**
+	 * Getter for the table name of the custom group team_member_data.
+	 */
+	public function getTeamMemberDataCustomGroupTableName() {
+		return $this->_teamMemberDataCustomGroupTableName;
+	}
+	
+	/**
+	 * Getter for the custom field id of the custom field team_member_of_team.
+	 */
+	public function getMemberOfTeamCustomFieldId() {
+		return $this->_memberOfTeamCustomFieldId;
+	}
+	
+	/**
+	 * Getter for the column name of the custom field team_member_of_team.
+	 */
+	public function getMemberOfTeamCustomFieldColumnName() {
+		return $this->_memberOfTeamCustomFieldColumnName;
+	}
+	
+	/**
+	 * Getter for the custom field id of the custom field team_role.
+	 */
+	public function getTeamRoleCustomFieldId() {
+		return $this->_teamRoleCustomFieldId;
+	}
+	
+	/**
+	 * Getter for the column name of the custom field team_role.
+	 */
+	public function getTeamRoleCustomFieldColumnName() {
+		return $this->_teamRoleCustomFieldColumnName;
+	}
+	
+	/**
+	 * Getter for the column name of the custom field donations.
+	 */
+	public function getDonationsCustomFieldColumnName() {
+		return $this->_donationsCustomFieldColumnName;
+	}
+	
+	/**
+	 * Getter for custom group id donor information.
+	 */
+	public function getDonorInformationCustomGroupdId() {
+		return $this->_donorInformationCustomGroupId;
+	}
+	
+	/**
+	 * Getter for custom group table name of donor information.
+	 */
+	public function getDonorInformationCustomGroupTableName() {
+		return $this->_donorInformationCustomGroupTableName; 
+	}
+	
+	/**
+	 * Getter for custom field column name for donate anonymous.
+	 */
+	public function getDonateAnonymousCustomFieldColumnName() {
+		return $this->_donateAnonymousCustomFieldColumnName;
+	}
+	
+	/**
+	 * Getter for custom field id for donate anonymous.
+	 */
+	public function getDonateAnonymousCustomFieldId() {
+		return $this->_donateAnoymousCustomFieldId;
+	}
+	
+	/**
+	 * Getter for the option value donate anonymous.
+	 */
+	public function getDonateAnonymousOptionValue() {
+		return $this->_donateAnonymousOptionValue;
+	}
+	
+	/**
 	 * Getter for completed contribution status id.
 	 */
 	public function getCompletedContributionStatusId() {
@@ -199,6 +324,13 @@ class CRM_Generic_Config {
 	public function getDonatieFinancialTypeId() {
 		return $this->_donatieFinancialTypeId;
 	}
+  
+  /**
+   * Getter for sms donation financial type id.
+   */
+  public function getSmsDonatieFinancialTypeId() {
+    return $this->_smsDonatieFinancialTypeId;
+  }
 	
 	/**
 	 * Getter for collecte financial type id.
@@ -219,6 +351,27 @@ class CRM_Generic_Config {
 	 */
 	public function getTeamParticipantRoleId() {
 		return $this->_teamParticipantRoleId;
+	}
+	
+	/**
+	 * Getter for role id of team member.
+	 */
+	public function getTeamMemberParticipantRoleId() {
+		return $this->_teamMemberParticipantRoleId;
+	}
+	
+	/**
+	 * Getter for the active status ids for team members.
+	 */
+	public function getTeamMemberParticipantActiveStatusIds() {
+		return $this->_teamMemberParticipantActiveStatusIds;
+	}
+	
+	/**
+	 * Role value for team capatin.
+	 */
+	public function getTeamCaptainRoleValue() {
+		return "Teamcaptain";
 	}
 	
 	/** 
@@ -281,6 +434,14 @@ class CRM_Generic_Config {
 		} catch (Exception $e) {
 			throw new Exception('Could not retrieve financial type Opbrengst loterij');
 		}
+    try {
+      $this->_smsDonatieFinancialTypeId = civicrm_api3('FinancialType', 'getvalue', array(
+        'name' => 'Opbrengst SMS donaties',
+        'return' => 'id',
+      ));
+    } catch (Exception $e) {
+      throw new Exception('Could not retrieve financial type Opbrengst SMS donaties');
+    }
 	}
 
 	private function loadCustomGroups() {
@@ -341,20 +502,41 @@ class CRM_Generic_Config {
 		} catch (Exception $ex) {
 			throw new Exception('Could not find custom field Towards Team Member');
 		}
-    try {
-      $_teamMemberCustomGroup = civicrm_api3('CustomGroup', 'getsingle', array('name' => 'team_member_data'));
-      $this->_teamMemberDataCustomGroupId = $_teamMemberCustomGroup['id'];
-      $this->_teamMemberDataCustomGroupTableName = $_teamMemberCustomGroup['table_name'];
-    } catch (Exception $ex) {
-      throw new Exception('Could not find custom group for Team Member Data');
-    }
-    try {
-      $_memberOfTeamCustomField = civicrm_api3('CustomField', 'getsingle', array('name' => 'team_member_of_team', 'custom_group_id' => $this->_teamMemberDataCustomGroupId));
-      $this->_memberOfTeamCustomFieldColumnName = $_memberOfTeamCustomField['column_name'];
-      $this->_memberOfTeamCustomFieldId = $_memberOfTeamCustomField['id'];
-    } catch (Exception $ex) {
-      throw new Exception('Could not find custom field Member of Team');
-    }
+		try {
+			$_teamMemberCustomGroup = civicrm_api3('CustomGroup', 'getsingle', array('name' => 'team_member_data'));
+			$this->_teamMemberDataCustomGroupId = $_teamMemberCustomGroup['id'];
+			$this->_teamMemberDataCustomGroupTableName = $_teamMemberCustomGroup['table_name'];
+		} catch (Exception $ex) {
+			throw new Exception('Could not find custom group for Team Member Data');
+		}
+		try {
+			$_memberOfTeamCustomField = civicrm_api3('CustomField', 'getsingle', array('name' => 'team_member_of_team', 'custom_group_id' => $this->_teamMemberDataCustomGroupId));
+			$this->_memberOfTeamCustomFieldColumnName = $_memberOfTeamCustomField['column_name'];
+			$this->_memberOfTeamCustomFieldId = $_memberOfTeamCustomField['id'];
+		} catch (Exception $ex) {
+			throw new Exception('Could not find custom field Member of Team');
+		}
+		try {
+			$_teamRoleCustomField = civicrm_api3('CustomField', 'getsingle', array('name' => 'team_role', 'custom_group_id' => $this->_teamMemberDataCustomGroupId));
+			$this->_teamRoleCustomFieldColumnName = $_teamRoleCustomField['column_name'];
+			$this->_teamRoleCustomFieldId = $_teamRoleCustomField['id'];
+		} catch (Exception $ex) {
+			throw new Exception('Could not find custom field Team role');
+		}
+		try {
+			$_donorInformationCustomGroup = civicrm_api3('CustomGroup', 'getsingle', array('name' => 'donor_information'));
+			$this->_donorInformationCustomGroupId = $_donorInformationCustomGroup['id'];
+			$this->_donorInformationCustomGroupTableName = $_donorInformationCustomGroup['table_name'];
+		} catch (Exception $ex) {
+			throw new Exception('Could not find custom group for Donor Information');
+		}
+		try {
+			$_anonymousCustomField = civicrm_api3('CustomField', 'getsingle', array('name' => 'anonymous', 'custom_group_id' => $this->_donorInformationCustomGroupId));
+			$this->_donateAnonymousCustomFieldColumnName = $_anonymousCustomField['column_name'];
+			$this->_donateAnoymousCustomFieldId = $_anonymousCustomField['id'];
+		} catch (Exception $ex) {
+			throw new Exception('Could not find custom field Anonymous');
+		}
 	}
 	
 }

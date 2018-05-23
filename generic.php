@@ -16,6 +16,29 @@ function generic_civicrm_container(ContainerBuilder $container) {
 }
 
 /**
+ * Implements hook_civicrm_tokens().
+ *
+ * @link https://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_tokens
+ *
+ * Provide the tokens defined in this extensions
+ */
+function generic_civicrm_tokens(&$tokens) {
+	$contributionTokenClass = CRM_Generic_Tokens_Contribution::singleton();
+	$contributionTokenClass->tokens($tokens);
+}
+/**
+ * Implements hook__civicrm_tokenValues().
+ *
+ * @link https://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_tokenValues
+ *
+ * Provide the implementation of the tokens of this extension
+ */
+function generic_civicrm_tokenValues(&$values, $cids, $job = null, $tokens = array(), $context = null) {
+  $contributionTokenClass = CRM_Generic_Tokens_Contribution::singleton();
+  $contributionTokenClass->tokenValues($values, $cids, $tokens);
+}
+
+/**
  * Implements hook_civicrm_config().
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_config
@@ -155,6 +178,8 @@ function _generic_load_config_items() {
 function _generic_required_extensions_installed() {
   $required = array(
     'org.civicoop.configitems' => FALSE,
+    'org.civicoop.civirules' => FALSE,
+    'org.civicoop.emailapi' => FALSE,
   );
   $installedExtensions = civicrm_api3('Extension', 'get', array(
     'option' => array('limit' => 0,),));
@@ -170,6 +195,29 @@ function _generic_required_extensions_installed() {
       nl.roparun.generic');
     }
   }
+}
+
+function _generic_is_civirules_installed() {
+	$civiRulesInstalled = FALSE;
+	$emailApiInstalled = FALSE;
+  try {
+    $extensions = civicrm_api3('Extension', 'get', array('options' => array('limit' => 0)));
+    foreach($extensions['values'] as $ext) {
+      if ($ext['key'] == 'org.civicoop.civirules' && ($ext['status'] == 'installed' || $ext['status'] == 'disabled')) {
+        $civiRulesInstalled = TRUE;
+      }
+			if ($ext['key'] == 'org.civicoop.emailapi' && ($ext['status'] == 'installed' || $ext['status'] == 'disabled')) {
+        $emailApiInstalled = TRUE;
+      }
+    }
+		if ($emailApiInstalled && $civiRulesInstalled) {
+			return TRUE;
+		}
+  }
+  catch (Exception $e) {
+    return FALSE;
+  }
+  return FALSE;
 }
 
 // --- Functions below this ship commented out. Uncomment as required. ---

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<menu>
+  <item>
+    <path>civicrm/civirules/actions/emailteamcaptain</path>
+    <page_callback>CRM_Generic_CiviRulesAction_Form_EmailTeamCaptain</page_callback>
+    <title>E-mail team captain (civirules action)</title>
+    <access_arguments>access CiviCRM</access_arguments>
+    <access_arguments>administer CiviCRM</access_arguments>
+  </item>
+</menu>
