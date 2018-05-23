@@ -4,10 +4,6 @@ class CRM_Generic_Config {
 	
 	private static $singleton;
 	
-  private $_teamMemberDataCustomGroupId;
-  private $_teamMemberDataCustomGroupTableName;
-  private $_memberOfTeamCustomFieldId;
-  private $_memberOfTeamCustomFieldColumnName;
 	private $_teamDataCustomGroupId;
 	private $_teamDataCustomGroupTableName;
 	private $_teamNrCustomFieldId;
@@ -200,34 +196,6 @@ class CRM_Generic_Config {
 	}
   
   /**
-   * Getter for the custom group id of custom group team_member_data.
-   */
-  public function getTeamMemberDataCustomGroupId() {
-    return $this->_teamMemberDataCustomGroupId;
-  }
-  
-  /**
-   * Getter for the table name of the custom group team_member_data.
-   */
-  public function getTeamMemberDataCustomGroupTableName() {
-    return $this->_teamMemberDataCustomGroupTableName;
-  }
-  
-  /**
-   * Getter for the custom field id of the custom field team_member_of_team.
-   */
-  public function getMemberOfTeamCustomFieldId() {
-    return $this->_memberOfTeamCustomFieldId;
-  }
-  
-  /**
-   * Getter for the column name of the custom field team_member_of_team.
-   */
-  public function getMemberOfTeamCustomFieldColumnName() {
-    return $this->_memberOfTeamCustomFieldColumnName;
-  }
-	
-	/**
 	 * Getter for the custom group id of custom group team_member_data.
 	 */
 	public function getTeamMemberDataCustomGroupId() {
