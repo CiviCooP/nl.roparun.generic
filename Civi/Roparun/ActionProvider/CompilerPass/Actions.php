@@ -14,6 +14,7 @@ class Actions implements CompilerPassInterface {
     }
     $actionProviderDefinition = $container->getDefinition('action_provider');
     $actionProviderDefinition->addMethodCall('addAction', array(new Definition('Civi\Roparun\ActionProvider\Action\CurrentEvent')));
+    $actionProviderDefinition->addMethodCall('addAction', array(new Definition('Civi\Roparun\ActionProvider\Action\GetCampaignFromEvent')));
     $actionProviderDefinition->addMethodCall('addAction', array(new Definition('Civi\Roparun\ActionProvider\Action\ContactIsMemberOfTeam')));
   }
   
