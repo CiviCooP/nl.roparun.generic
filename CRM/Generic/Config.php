@@ -10,6 +10,8 @@ class CRM_Generic_Config {
 	private $_teamNrCustomFieldColumnName;
 	private $_teamNameCustomFieldId;
 	private $_teamNameCustomFieldColumnName;
+  private $_startLocationCustomFieldId;
+  private $_startLocationCustomFieldColumnName;
 	private $_donatedTowardsCustomGroupId;
 	private $_donatedTowardsCustomGroupTableName;
 	private $_towardsTeamCustomFieldId;
@@ -44,6 +46,7 @@ class CRM_Generic_Config {
 	private $_donateAnoymousCustomFieldId;
 	private $_donateAnonymousCustomFieldColumnName;
 	private $_donateAnonymousOptionValue;
+  private $_vestigingsLocationTypeId;
 	
 	private function __construct() {
 		$this->loadCustomGroups();
@@ -103,6 +106,14 @@ class CRM_Generic_Config {
 		} catch (Exception $ex) {
 			throw new Exception ('Could not retrieve the option value Anonymous for option group anonymous donation');
 		}
+    try {
+      $this->_vestigingsLocationTypeId = civicrm_api3('LocationType', 'getvalue', array(
+        'return' => 'id',
+        'name' => 'Vestigingsplaats',
+      ));
+    } catch (Exception $ex) {
+      throw new Exception('Could not find Vestigingsadres location type id');
+    }
 	}
 	
 	/**
@@ -156,6 +167,20 @@ class CRM_Generic_Config {
 	public function getTeamNameCustomFieldColumnName() {
 		return $this->_teamNameCustomFieldColumnName;
 	}
+  
+  /**
+   * Getter for the id of the custom field start_location.
+   */
+  public function getStartLocationCustomFieldId() {
+    return $this->_startLocationCustomFieldId;
+  }
+  
+  /**
+   * Getter for the column name of the custom field start_location.
+   */
+  public function getStartLocationCustomFieldColumnName() {
+    return $this->_startLocationCustomFieldColumnName;
+  }
 	
 	/**
 	 * Getter for custom group id of donated towards.
@@ -408,6 +433,13 @@ class CRM_Generic_Config {
 	public function getEndDateDonationsCustomFieldColumnName() {
 		return $this->_endDateDonationsCustomFieldColumnName;
 	}
+  
+  /**
+   * Getter for vestigingsplaats location type id.
+   */
+  public function getVestingsplaatsLocationTypeId() {
+    return $this->_vestigingsLocationTypeId;
+  }
 
 	private function loadFinancialTypes() {
 		try {
@@ -480,6 +512,13 @@ class CRM_Generic_Config {
 		} catch (Exception $ex) {
 			throw new Exception('Could not find custom field Team Name');
 		}
+    try {
+      $_startLocationCustomField = civicrm_api3('CustomField', 'getsingle', array('name' => 'start_location', 'custom_group_id' => $this->_teamDataCustomGroupId));
+      $this->_startLocationCustomFieldColumnName = $_startLocationCustomField['column_name'];
+      $this->_startLocationCustomFieldId = $_startLocationCustomField['id'];
+    } catch (Exception $ex) {
+      throw new Exception('Could not find custom field Start Location');
+    }
 		
 		try {
 			$_donatedTowardsCustomGroup = civicrm_api3('CustomGroup', 'getsingle', array('name' => 'donated_towards'));
