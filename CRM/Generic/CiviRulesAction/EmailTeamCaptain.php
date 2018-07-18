@@ -21,9 +21,8 @@ class CRM_Generic_CiviRulesAction_EmailTeamCaptain extends CRM_Civirules_Action 
 		if (!$team_contact_id) {
 			return; // this contribution is not linked to a team. So return
 		}
-		
-		$event_id = CRM_Generic_CurrentEvent::getCurrentRoparunEventId();
-		$team_captain_contact_ids = CRM_Generic_Team::getTeamCaptainContacts($team_contact_id, $event_id);
+
+		$team_captain_contact_ids = CRM_Generic_Team::getTeamCaptainContacts($team_contact_id);
 		if (!count($team_captain_contact_ids)) {
 			return; // there is no team captain found.
 		}

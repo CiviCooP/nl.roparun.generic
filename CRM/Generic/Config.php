@@ -3,7 +3,11 @@
 class CRM_Generic_Config {
 	
 	private static $singleton;
-	
+
+	private $_teamcaptainTeamportalCustomGroupId;
+	private $_teamcaptainTeamportalCustomGroupTableName;
+	private $_teamcaptainTeamportalAccessFieldId;
+  private $_teamcaptainTeamportalAccessColumnName;
 	private $_teamDataCustomGroupId;
 	private $_teamDataCustomGroupTableName;
 	private $_teamNrCustomFieldId;
@@ -25,7 +29,6 @@ class CRM_Generic_Config {
 	private $_completedContributionStatusId;
 	private $_teamParticipantRoleId;
 	private $_teamMemberParticipantRoleId;
-	private $_teamMemberParticipantActiveStatusIds;
 	private $_roparunEventTypeId;
 	private $_roparunEventCustomGroupId;
 	private $_roparunEventCustomGroupTableName;
@@ -47,6 +50,7 @@ class CRM_Generic_Config {
 	private $_donateAnonymousCustomFieldColumnName;
 	private $_donateAnonymousOptionValue;
   private $_vestigingsLocationTypeId;
+  private $_teamCaptainRelationshipTypeId;
 	
 	private function __construct() {
 		$this->loadCustomGroups();
@@ -79,16 +83,6 @@ class CRM_Generic_Config {
 			throw new Exception ('Could not retrieve the Team participant role');
 		}
 		try {
-			$this->_teamMemberParticipantActiveStatusIds = array();
-			$status_ids = civicrm_api3('ParticipantStatusType', 'get', array('is_counted' => 1, 'options' => array('limit' => 0)));
-			foreach($status_ids['values'] as $status) {
-				$this->_teamMemberParticipantActiveStatusIds[] = $status['id'];	
-			}
-		} catch (Exception $e) {
-			throw new Exception('Could not find active participant statuses');
-		}
-		
-		try {
 			$this->_completedContributionStatusId = civicrm_api3('OptionValue', 'getvalue', array(
 				'return' => 'value',
 				'name' => 'Completed',
@@ -114,6 +108,11 @@ class CRM_Generic_Config {
     } catch (Exception $ex) {
       throw new Exception('Could not find Vestigingsadres location type id');
     }
+    try {
+      $this->_teamCaptainRelationshipTypeId = civicrm_api3('RelationshipType', 'getvalue', array('name_b_a' => 'Teamcaptain is', 'return' => 'id'));
+    } catch (Exception $e) {
+      throw new Exception('Could not find relationship type team captain');
+    }
 	}
 	
 	/**
@@ -125,6 +124,34 @@ class CRM_Generic_Config {
 		}
 		return self::$singleton;
 	}
+
+  /**
+   * Getter for the id of the custom group teamcaptain_teamportal
+   */
+	public function getTeamcaptainCustomGroupId() {
+	  return $this->_teamcaptainTeamportalCustomGroupId;
+  }
+
+  /**
+   * Getter for the id of the custom group teamcaptain_teamportal
+   */
+  public function getTeamcaptainCustomGroupTableName() {
+    return $this->_teamcaptainTeamportalCustomGroupTableName;
+  }
+
+  /**
+   * Getter for the id of the custom field teamcaptain_teamportal_access.
+   */
+  public function getTeamcaptainTeamportalAccessCustomFieldId() {
+    return $this->_teamcaptainTeamportalAccessFieldId;
+  }
+
+  /**
+   * Getter for the column name of the custom field teamcaptain_teamportal_access.
+   */
+  public function getTeamcaptainTeamportalAccessCustomFieldColumnName() {
+    return $this->_teamcaptainTeamportalAccessColumnName;
+  }
 	
 	/**
 	 * Getter for the id of the custom group team_data.
@@ -385,20 +412,6 @@ class CRM_Generic_Config {
 		return $this->_teamMemberParticipantRoleId;
 	}
 	
-	/**
-	 * Getter for the active status ids for team members.
-	 */
-	public function getTeamMemberParticipantActiveStatusIds() {
-		return $this->_teamMemberParticipantActiveStatusIds;
-	}
-	
-	/**
-	 * Role value for team capatin.
-	 */
-	public function getTeamCaptainRoleValue() {
-		return "Teamcaptain";
-	}
-	
 	/** 
 	 * Getter for the Roparun event type id.
 	 */
@@ -441,6 +454,13 @@ class CRM_Generic_Config {
     return $this->_vestigingsLocationTypeId;
   }
 
+  /**
+   * Getter for the relationship type id.
+   */
+  public function getTeamCaptainRelationshipTypeId() {
+    return $this->_teamCaptainRelationshipTypeId;
+  }
+
 	private function loadFinancialTypes() {
 		try {
 			$this->_donatieFinancialTypeId = civicrm_api3('FinancialType', 'getvalue', array(
@@ -477,6 +497,20 @@ class CRM_Generic_Config {
 	}
 
 	private function loadCustomGroups() {
+    try {
+      $_teamcaptainTeamportalCustomGroup = civicrm_api3('CustomGroup', 'getsingle', array('name' => 'teamcaptain_teamportal'));
+      $this->_teamcaptainTeamportalCustomGroupId = $_teamcaptainTeamportalCustomGroup['id'];
+      $this->_teamcaptainTeamportalCustomGroupTableName = $_teamcaptainTeamportalCustomGroup['table_name'];
+    } catch (Exception $ex) {
+      throw new Exception('Could not find custom group for teamcaptain_teamportal');
+    }
+    try {
+      $_teamcaptainTeamportalAccessCustomField = civicrm_api3('CustomField', 'getsingle', array('name' => 'teamcaptain_teamportal_access', 'custom_group_id' => $this->_teamcaptainTeamportalCustomGroupId));
+      $this->_teamcaptainTeamportalAccessColumnName = $_teamcaptainTeamportalAccessCustomField['column_name'];
+      $this->_teamcaptainTeamportalAccessFieldId = $_teamcaptainTeamportalAccessCustomField['id'];
+    } catch (Exception $ex) {
+      throw new Exception('Could not find custom field teamcaptain_teamportal_access');
+    }
 		try {
 			$_roparunEventCustomGroup = civicrm_api3('CustomGroup', 'getsingle', array('name' => 'roparun_event'));
 			$this->_roparunEventCustomGroupId = $_roparunEventCustomGroup['id'];

@@ -11,7 +11,7 @@
 		"collapse_display": 0,
 		"table_name": "civicrm_value_roparun_event",
 		"fields": {
-			"competition_result": {
+			"end_date_donations": {
 				"name": "end_date_donations",
 				"label": "Doneren mogelijk tot",
 				"data_type": "Date",
