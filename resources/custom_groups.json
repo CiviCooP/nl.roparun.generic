@@ -120,6 +120,44 @@
       }
     }
 	},
+	"teamcaptain_teamportal": {
+		"name": "teamcaptain_teamportal",
+		"title": "Teamportal",
+		"extends": "Relationship",
+		"extends_entity_column_value": [
+			"Teamcaptain voor"
+		],
+		"style": "Inline",
+		"collapse_display": "0",
+		"weight": "10",
+		"is_active": "1",
+		"table_name": "civicrm_value_teamcaptain_teamportal",
+		"is_multiple": "0",
+		"collapse_adv_display": "0",
+		"is_reserved": "1",
+		"is_public": "1",
+		"fields": {
+			"teamcaptain_teamportal_access": {
+				"name": "teamcaptain_teamportal_access",
+				"label": "Toegang tot teamportal",
+				"help_pre": "Als dit vinkje gezet is en de relatie is actief dan krijgt de teamcaptain toegang tot het teamportal.",
+				"data_type": "Boolean",
+				"html_type": "Radio",
+				"default_value": "0",
+				"is_required": "0",
+				"is_searchable": "1",
+				"is_search_range": "0",
+				"weight": "1",
+				"is_active": "1",
+				"is_view": "0",
+				"text_length": "255",
+				"note_columns": "60",
+				"note_rows": "4",
+				"column_name": "access",
+				"in_selector": "0"
+			}
+		}
+	},
 	"team_data": {
 		"name": "team_data",
 		"title": "Roparun Teamgegevens",
