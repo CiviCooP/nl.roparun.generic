@@ -51,6 +51,7 @@ class CRM_Generic_Config {
 	private $_donateAnonymousOptionValue;
   private $_vestigingsLocationTypeId;
   private $_teamCaptainRelationshipTypeId;
+  private $_billingLocationTypeId;
 	
 	private function __construct() {
 		$this->loadCustomGroups();
@@ -112,6 +113,11 @@ class CRM_Generic_Config {
       $this->_teamCaptainRelationshipTypeId = civicrm_api3('RelationshipType', 'getvalue', array('name_b_a' => 'Teamcaptain is', 'return' => 'id'));
     } catch (Exception $e) {
       throw new Exception('Could not find relationship type team captain');
+    }
+    try {
+		  $this->_billingLocationTypeId = civicrm_api3('LocationType', 'getvalue', array('return' => 'id', 'name' => 'Billing'));
+    } catch (Exception $e) {
+		  throw new Exception('Could not retrieve Billing location type');
     }
 	}
 	
@@ -459,6 +465,15 @@ class CRM_Generic_Config {
    */
   public function getTeamCaptainRelationshipTypeId() {
     return $this->_teamCaptainRelationshipTypeId;
+  }
+
+  /**
+   * Getter for the billing location type id.
+   *
+   * @return int
+   */
+  public function getBillingLocationTypeId() {
+    return $this->_billingLocationTypeId;
   }
 
 	private function loadFinancialTypes() {
