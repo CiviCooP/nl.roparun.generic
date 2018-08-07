@@ -1,0 +1,11 @@
+{
+  "order": {
+    "label": "Bestelling",
+    "name": "order",
+    "is_default": "0",
+    "weight": "1",
+    "is_optgroup": "0",
+    "is_reserved": "1",
+    "is_active": "1"
+  }
+}

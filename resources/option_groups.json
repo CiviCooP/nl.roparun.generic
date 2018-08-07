@@ -1,4 +1,31 @@
 {
+	"activity_status": {
+		"name": "activity_status",
+		"title": "Activiteitsstatus",
+		"option_values": {
+			"order_new": {
+				"name": "order_new",
+				"label": "Nieuwe bestelling",
+				"value": "20",
+				"is_active": 1,
+				"is_reserved": 1
+			},
+			"order_confirmed": {
+				"name": "order_confirmed",
+				"label": "Bestelling in behandeling",
+				"value": "21",
+				"is_active": 1,
+				"is_reserved": 1
+			},
+			"order_finished": {
+				"name": "order_finished",
+				"label": "Bestelling afgehandeld",
+				"value": "22",
+				"is_active": 1,
+				"is_reserved": 1
+			}
+		}
+	},
 	"participant_role": {
 		"name": "participant_role",
 		"title": "Rol van deelnemers",
