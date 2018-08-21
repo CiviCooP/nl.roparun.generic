@@ -50,6 +50,7 @@ class CRM_Generic_Config {
   private $_vestigingsLocationTypeId;
   private $_teamCaptainRelationshipTypeId;
   private $_billingLocationTypeId;
+  private $_phoneDuringEventTypeId;
 	
 	private function __construct() {
 		$this->loadCustomGroups();
@@ -117,6 +118,11 @@ class CRM_Generic_Config {
     } catch (Exception $e) {
 		  throw new Exception('Could not retrieve Billing location type');
     }
+    try {
+      $this->_phoneDuringEventTypeId = civicrm_api3('OptionValue', 'getvalue', array('return' => 'value', 'name' => 'during_event', 'option_group_id' => 'phone_type'));
+    } catch (Exception $e) {
+      throw new Exception('Could not retrieve phone type: during_event');
+    }
 	}
 	
 	/**
@@ -128,6 +134,15 @@ class CRM_Generic_Config {
 		}
 		return self::$singleton;
 	}
+
+  /**
+   * Getter for the phone type during event.
+   *
+   * @return int
+   */
+	public function getDuringEventPhoneTypeId() {
+	  return $this->_phoneDuringEventTypeId;
+  }
 
   /**
    * Getter for the id of the custom group teamcaptain_teamportal
