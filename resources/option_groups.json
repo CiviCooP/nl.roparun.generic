@@ -26,6 +26,19 @@
 			}
 		}
 	},
+	"phone_type": {
+		"name": "phone_type",
+		"title": "Telefoontype",
+		"option_values": {
+			"during_event": {
+				"name": "during_event",
+				"label": "Telefoonnr. tijdens evenement",
+				"value": "20",
+				"is_active": 1,
+				"is_reserved": 1
+			}
+		}
+	},
 	"participant_role": {
 		"name": "participant_role",
 		"title": "Rol van deelnemers",
