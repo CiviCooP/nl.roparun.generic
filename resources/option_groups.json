@@ -287,5 +287,87 @@
         "is_active": "1"
       }
     }
+  },
+  "vehicle_types": {
+    "name": "vehicle_types",
+    "title": "Voertuig types",
+    "option_values": {
+      "A": {
+        "label": "A",
+        "value": "A",
+        "name": "A",
+        "is_default": "0",
+        "weight": "2",
+        "is_optgroup": "0",
+        "is_reserved": "0",
+        "is_active": "1"
+      },
+      "B": {
+        "label": "B",
+        "value": "B",
+        "name": "B",
+        "is_default": "0",
+        "weight": "3",
+        "is_optgroup": "0",
+        "is_reserved": "0",
+        "is_active": "1"
+      },
+      "C": {
+        "label": "C",
+        "value": "C",
+        "name": "C",
+        "is_default": "0",
+        "weight": "4",
+        "is_optgroup": "0",
+        "is_reserved": "0",
+        "is_active": "1"
+      },
+      "none": {
+        "label": "Geen",
+        "value": "none",
+        "name": "none",
+        "is_default": "0",
+        "weight": "1",
+        "is_optgroup": "0",
+        "is_reserved": "0",
+        "is_active": "1"
+      }
+    }
+  },
+  "vehicle_trailer_types": {
+    "name": "vehicle_trailer_types",
+    "title": "Voertuig aanhanger opties",
+    "option_values": {
+      "no": {
+        "label": "Geen",
+        "value": "no",
+        "name": "no",
+        "is_default": "0",
+        "weight": "1",
+        "is_optgroup": "0",
+        "is_reserved": "0",
+        "is_active": "1"
+      },
+      "yes": {
+        "label": "Ja",
+        "value": "yes",
+        "name": "yes",
+        "is_default": "0",
+        "weight": "2",
+        "is_optgroup": "0",
+        "is_reserved": "0",
+        "is_active": "1"
+      },
+      "dixie": {
+        "label": "Ja, met Dixie",
+        "value": "dixie",
+        "name": "dixie",
+        "is_default": "0",
+        "weight": "3",
+        "is_optgroup": "0",
+        "is_reserved": "0",
+        "is_active": "1"
+      }
+    }
   }
 }
