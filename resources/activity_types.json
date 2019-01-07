@@ -7,5 +7,14 @@
     "is_optgroup": "0",
     "is_reserved": "1",
     "is_active": "1"
+  },
+  "team_name_changed": {
+    "label": "Teamnaam gewijzigd",
+    "name": "team_name_changed",
+    "is_default": "0",
+    "weight": "1",
+    "is_optgroup": "0",
+    "is_reserved": "1",
+    "is_active": "1"
   }
 }
