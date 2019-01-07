@@ -14,6 +14,8 @@ class CRM_Generic_Config {
 	private $_teamNrCustomFieldColumnName;
 	private $_teamNameCustomFieldId;
 	private $_teamNameCustomFieldColumnName;
+	private $_averageSpeedCustomFieldId;
+	private $_averageSpeedCustomFieldColumnName;
   private $_startLocationCustomFieldId;
   private $_startLocationCustomFieldColumnName;
 	private $_donatedTowardsCustomGroupId;
@@ -213,6 +215,20 @@ class CRM_Generic_Config {
 	public function getTeamNameCustomFieldColumnName() {
 		return $this->_teamNameCustomFieldColumnName;
 	}
+
+  /**
+   * Getter for the id of the custom field average_speed.
+   */
+  public function getAverageSpeedCustomFieldId() {
+    return $this->_averageSpeedCustomFieldId;
+  }
+
+  /**
+   * Getter for the column name of the custom field average_speed.
+   */
+  public function getAverageSpeedCustomFieldColumnName() {
+    return $this->_averageSpeedCustomFieldColumnName;
+  }
   
   /**
    * Getter for the id of the custom field start_location.
@@ -560,6 +576,13 @@ class CRM_Generic_Config {
 		} catch (Exception $ex) {
 			throw new Exception('Could not find custom field Team Name');
 		}
+    try {
+      $_averageCustomField = civicrm_api3('CustomField', 'getsingle', array('name' => 'average_speed', 'custom_group_id' => $this->_teamDataCustomGroupId));
+      $this->_averageSpeedCustomFieldColumnName = $_averageCustomField['column_name'];
+      $this->_averageSpeedCustomFieldId = $_averageCustomField['id'];
+    } catch (Exception $ex) {
+      throw new Exception('Could not find custom field Team Name');
+    }
     try {
       $_startLocationCustomField = civicrm_api3('CustomField', 'getsingle', array('name' => 'start_location', 'custom_group_id' => $this->_teamDataCustomGroupId));
       $this->_startLocationCustomFieldColumnName = $_startLocationCustomField['column_name'];
