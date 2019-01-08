@@ -35,7 +35,7 @@ class CRM_Generic_Tokens_MissingTeamInformation extends CRM_Generic_Tokens_Token
   }
 
   public function tokens(&$tokens) {
-    $tokens[$this->token_name][$this->token_name.'.missing_info'] = ts('Missing information');
+    $tokens[$this->token_name][$this->token_name.'.missing_info'] = ts('Ontbrekende gegevens');
   }
 
   public function tokenValues(&$values, $cids, $tokens = array()) {
