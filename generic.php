@@ -25,6 +25,8 @@ function generic_civicrm_container(ContainerBuilder $container) {
 function generic_civicrm_tokens(&$tokens) {
 	$contributionTokenClass = CRM_Generic_Tokens_Contribution::singleton();
 	$contributionTokenClass->tokens($tokens);
+	$missingInfoTokenClass = CRM_Generic_Tokens_MissingTeamInformation::singleton();
+	$missingInfoTokenClass->tokens($tokens);
 }
 /**
  * Implements hook__civicrm_tokenValues().
@@ -36,6 +38,8 @@ function generic_civicrm_tokens(&$tokens) {
 function generic_civicrm_tokenValues(&$values, $cids, $job = null, $tokens = array(), $context = null) {
   $contributionTokenClass = CRM_Generic_Tokens_Contribution::singleton();
   $contributionTokenClass->tokenValues($values, $cids, $tokens);
+  $missingInfoTokenClass = CRM_Generic_Tokens_MissingTeamInformation::singleton();
+  $missingInfoTokenClass->tokenValues($values, $cids, $tokens);
 }
 
 /**

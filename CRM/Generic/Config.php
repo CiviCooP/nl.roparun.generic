@@ -4,6 +4,12 @@ class CRM_Generic_Config {
 	
 	private static $singleton;
 
+	private $_iceCustomGroupId;
+	private $_iceCustomGroupTableName;
+	private $_iceWaarschuwInGevalVanNoodCustomFieldId;
+  private $_iceWaarschuwInGevalVanNoodCustomFieldColumnName;
+  private $_iceTelefoonInGevalVanNoodCustomFieldId;
+  private $_iceTelefoonInGevalVanNoodCustomFieldColumnName;
 	private $_teamcaptainTeamportalCustomGroupId;
 	private $_teamcaptainTeamportalCustomGroupTableName;
 	private $_teamcaptainTeamportalAccessFieldId;
@@ -53,10 +59,15 @@ class CRM_Generic_Config {
   private $_teamCaptainRelationshipTypeId;
   private $_billingLocationTypeId;
   private $_phoneDuringEventTypeId;
+  private $_activeParticipantStatusIds = array();
 	
 	private function __construct() {
 		$this->loadCustomGroups();
 		$this->loadFinancialTypes();
+    $participantStatuses = civicrm_api3('ParticipantStatusType', 'get', array('is_active' => 1, 'class' => array('IN' => array("Positive")), 'options' => array('limit' => 0)));
+    foreach($participantStatuses['values'] as $participantStatus) {
+      $this->_activeParticipantStatusIds[] = $participantStatus['id'];
+    }
 		try {
 			$this->_roparunEventTypeId = civicrm_api3('OptionValue', 'getvalue', array(
 				'return' => 'value',
@@ -136,6 +147,13 @@ class CRM_Generic_Config {
 		}
 		return self::$singleton;
 	}
+
+  /**
+   * Returns an array with status ids for active participant statuses.
+   */
+  public function getActiveParticipantStatusIds() {
+    return $this->_activeParticipantStatusIds;
+  }
 
   /**
    * Getter for the phone type during event.
@@ -439,6 +457,48 @@ class CRM_Generic_Config {
 	public function getRoparunEventTypeId() {
 		return $this->_roparunEventTypeId;
 	}
+
+  /**
+   * Getter for the custom group id of the custom group 'Teamlidgegevens_ICE'.
+   */
+  public function getICECustomGroupId() {
+    return $this->_iceCustomGroupId;
+  }
+
+  /**
+   * Getter for the custom group table name of the custom group 'Teamlidgegevens_ICE'.
+   */
+  public function getICECustomGroupTableName() {
+    return $this->_iceCustomGroupTableName;
+  }
+
+  /**
+   * Getter for the custom field id of the custom field Waarschuwen_in_geval_van_nood.
+   */
+  public function getICEWaarschuwInGevalVanNoodCustomFieldId() {
+    return $this->_iceWaarschuwInGevalVanNoodCustomFieldId;
+  }
+
+  /**
+   * Getter for the custom field column name of the custom field Waarschuwen_in_geval_van_nood.
+   */
+  public function getICEWaarschuwInGevalVanNoodCustomFieldColumnName() {
+    return $this->_iceWaarschuwInGevalVanNoodCustomFieldColumnName;
+  }
+
+  /**
+   * Getter for the custom field id of the custom field Telefoon_in_geval_van_nood.
+   */
+  public function getICETelefoonInGevalVanNoodCustomFieldId() {
+    return $this->_iceTelefoonInGevalVanNoodCustomFieldId;
+  }
+
+  /**
+   * Getter for the custom field column name of the custom field Telefoon_in_geval_van_nood.
+   */
+  public function getICETelefoonInGevalVanNoodCustomFieldColumnName() {
+    return $this->_iceTelefoonInGevalVanNoodCustomFieldColumnName;
+  }
 	
 	/**
 	 * Getter for the custom group id of the custom group 'roparun event'.
@@ -527,6 +587,29 @@ class CRM_Generic_Config {
 	}
 
 	private function loadCustomGroups() {
+    try {
+      $_iceCustomGroup = civicrm_api3('CustomGroup', 'getsingle', array('name' => 'Teamlidgegevens_ICE'));
+      $this->_iceCustomGroupId = $_iceCustomGroup['id'];
+      $this->_iceCustomGroupTableName = $_iceCustomGroup['table_name'];
+    } catch (Exception $ex) {
+      throw new Exception('Could not find custom group for Teamlidgegevens_ICE');
+    }
+    try {
+      $_waarschuwInGevalvanNoodCustomField = civicrm_api3('CustomField', 'getsingle', array('name' => 'Waarschuwen_in_geval_van_nood', 'custom_group_id' => $this->_iceCustomGroupId));
+      $this->_iceWaarschuwInGevalVanNoodCustomFieldColumnName = $_waarschuwInGevalvanNoodCustomField['column_name'];
+      $this->_iceWaarschuwInGevalVanNoodCustomFieldId = $_waarschuwInGevalvanNoodCustomField['id'];
+    } catch (Exception $ex) {
+      throw new Exception('Could not find custom field teamcaptain_teamportal_access');
+    }
+    try {
+      $_TelefoonInGevalvanNoodCustomField = civicrm_api3('CustomField', 'getsingle', array('name' => 'Telefoon_in_geval_van_nood', 'custom_group_id' => $this->_iceCustomGroupId));
+      $this->_iceTelefoonInGevalVanNoodCustomFieldColumnName = $_TelefoonInGevalvanNoodCustomField['column_name'];
+      $this->_iceTelefoonInGevalVanNoodCustomFieldId = $_TelefoonInGevalvanNoodCustomField['id'];
+    } catch (Exception $ex) {
+      throw new Exception('Could not find custom field teamcaptain_teamportal_access');
+    }
+
+
     try {
       $_teamcaptainTeamportalCustomGroup = civicrm_api3('CustomGroup', 'getsingle', array('name' => 'teamcaptain_teamportal'));
       $this->_teamcaptainTeamportalCustomGroupId = $_teamcaptainTeamportalCustomGroup['id'];

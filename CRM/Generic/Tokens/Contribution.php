@@ -1,6 +1,6 @@
 <?php
 
-class CRM_Generic_Tokens_Contribution {
+class CRM_Generic_Tokens_Contribution extends CRM_Generic_Tokens_Tokens {
 	
 	private $token_name = 'donation';
 	
@@ -18,6 +18,13 @@ class CRM_Generic_Tokens_Contribution {
 		}
 		return self::$instance;
 	}
+
+  /**
+   * @return String
+   */
+  protected function getTokenName() {
+    return $this->token_name;
+  }
 	
 	public function tokens(&$tokens) {
 		$tokens[$this->token_name][$this->token_name.'.amount'] = ts('Amount donated');	
@@ -134,42 +141,4 @@ class CRM_Generic_Tokens_Contribution {
 		}
 		return $this->contributions[$contribution_id];
 	}
-	
-  /**
-   * Check whether a token is present in the set of tokens.
-   *
-   * @param $tokens
-   * @param $token
-   * @return bool
-   */
-  protected function isTokenInTokens($tokens, $token) {
-    if (in_array($token, $tokens)) {
-      return true;
-    } elseif (isset($tokens[$token])) {
-      return true;
-    } elseif (isset($tokens[$this->token_name]) && in_array($token, $tokens[$this->token_name])) {
-      return true;
-    } elseif (isset($tokens[$this->token_name][$token])) {
-      return true;
-    }
-    return FALSE;
-  }
-  /**
-   * Set the value for a token and checks whether cids is an array or not.
-   *
-   * @param $values
-   * @param $cids
-   * @param $token
-   * @param $tokenValues
-   */
-  protected function setTokenValue(&$values, $cids, $token, $tokenValues) {
-    if (is_array($cids)) {
-      foreach ($cids as $cid) {
-        $values[$cid][$this->token_name . '.' . $token] = $tokenValues[$cid];
-      }
-    }
-    else {
-      $values[$this->token_name . '.' . $token] = $tokenValues[$cids];
-    }
-  }
 }
