@@ -214,7 +214,7 @@ class CRM_Generic_Tokens_MissingTeamInformation extends CRM_Generic_Tokens_Token
       if (!$dao->role) {
         $missing_contact_info[] = ts('functie');
       }
-      if (!$dao->show_on_website) {
+      if ($dao->show_on_website === null) {
         $missing_contact_info[] = ts('zichtbaar op de website');
       }
       if (!$dao->waarschuw_in_nood) {
