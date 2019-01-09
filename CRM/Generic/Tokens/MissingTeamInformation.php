@@ -135,7 +135,9 @@ class CRM_Generic_Tokens_MissingTeamInformation extends CRM_Generic_Tokens_Token
       if (!$dao->type) {
         $missing_information[] = ts('Voertuig %1:  "Soort" is niet opgegeven', array(1 => $vehicle_nr));
       }
-      if ($dao->type && $dao->type != 'none') {
+      if ($dao->type && $dao->type == 'unknown') {
+        $missing_information[] = ts('Voertuig %1: is niet opgegeven', array(1 => $vehicle_nr));
+      } elseif ($dao->type && $dao->type != 'none') {
         if (!$dao->brand) {
           $missing_information[] = ts('Voertuig %1:  "Merk" is niet opgegeven', array(1 => $vehicle_nr));
         }
