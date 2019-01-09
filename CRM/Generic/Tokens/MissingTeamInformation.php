@@ -105,13 +105,13 @@ class CRM_Generic_Tokens_MissingTeamInformation extends CRM_Generic_Tokens_Token
     $config = CRM_Generic_Config::singleton();
 
     $sql = "
-      SELECT {$config->getAverageSpeedCustomFieldId()} as average_speed 
+      SELECT {$config->getAverageSpeedCustomFieldColumnName()} as average_speed 
       FROM {$config->getTeamDataCustomGroupTableName()} 
       WHERE entity_id = %1
     ";
     $params[1] = array($participant_id, 'Integer');
-    $averageSpeed = CRM_Core_DAO::singleValueQuery($sql, $params);
-    if ($averageSpeed && $averageSpeed > 0.00) {
+    $averageSpeed = (float) CRM_Core_DAO::singleValueQuery($sql, $params);
+    if ($averageSpeed && $averageSpeed > 0.0) {
       unset($missing_information['average_speed']);
     }
   }
