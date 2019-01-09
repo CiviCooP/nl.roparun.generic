@@ -45,6 +45,7 @@ class CRM_Generic_Tokens_MissingTeamInformation extends CRM_Generic_Tokens_Token
   }
 
   protected function missing_info_token(&$values, $cids, $token) {
+    $event_id = CRM_Generic_CurrentEvent::getCurrentRoparunEventId();
     $contact_ids = $cids;
     if (!is_array($contact_ids)) {
       $contact_ids = array($contact_ids);
@@ -58,14 +59,14 @@ class CRM_Generic_Tokens_MissingTeamInformation extends CRM_Generic_Tokens_Token
       $missing_information['vehicle3'] = ts("Voertuig 3 is niet opgegeven");
       $missing_information['vehicle4'] = ts("Voertuig 4 is niet opgegeven");
 
-      $participant_id = $this->getParticipantRecordId($contact_id);
+      $participant_id = $this->getParticipantRecordId($contact_id, $event_id);
       if ($participant_id) {
         $this->missingAverageSpeed($missing_information, $participant_id);
         $this->missingVehicle($missing_information, 1, $participant_id);
         $this->missingVehicle($missing_information, 2, $participant_id);
         $this->missingVehicle($missing_information, 3, $participant_id);
         $this->missingVehicle($missing_information, 4, $participant_id);
-        $this->missingTeamMembers($missing_information, $participant_id);
+        $this->missingTeamMembers($missing_information, $participant_id, $event_id);
       }
       if (!count($missing_information)) {
         $missing_information = array(ts("Alle gegevens zijn juist ingevuld"));
@@ -75,9 +76,8 @@ class CRM_Generic_Tokens_MissingTeamInformation extends CRM_Generic_Tokens_Token
     $this->setTokenValue($values, $cids, $token, $tokenValues);
   }
 
-  private function getParticipantRecordId($contact_id) {
+  private function getParticipantRecordId($contact_id, $event_id) {
     $config = CRM_Generic_Config::singleton();
-    $event_id = CRM_Generic_CurrentEvent::getCurrentRoparunEventId();
     $sql = "
       SELECT civicrm_participant.id as id
       FROM civicrm_contact 
@@ -154,7 +154,7 @@ class CRM_Generic_Tokens_MissingTeamInformation extends CRM_Generic_Tokens_Token
     }
   }
 
-  private function missingTeamMembers(&$missing_information, $participant_id) {
+  private function missingTeamMembers(&$missing_information, $participant_id, $event_id) {
     $config = CRM_Generic_Config::singleton();
     $sql = "
       SELECT 
@@ -168,9 +168,10 @@ class CRM_Generic_Tokens_MissingTeamInformation extends CRM_Generic_Tokens_Token
         civicrm_phone.phone,
         civicrm_email.email,
         team_member_data.{$config->getTeamRoleCustomFieldColumnName()} as role,
-        team_member_data.{$config->getShowOnWebsiteCustomFieldColumnName()} as show_on_website,
         ice.{$config->getICEWaarschuwInGevalVanNoodCustomFieldColumnName()} as waarschuw_in_nood,
-        ice.{$config->getICETelefoonInGevalVanNoodCustomFieldColumnName()} as telefoon_in_nood
+        ice.{$config->getICETelefoonInGevalVanNoodCustomFieldColumnName()} as telefoon_in_nood,
+        ice.{$config->getICEVerzekeringsnummerCustomFieldColumnName()} as verzekeringsnummer,
+        ice.{$config->getICEBijzonderhedenCustomFieldColumnName()} as bijzonderheden
     FROM civicrm_contact
     INNER JOIN civicrm_participant ON civicrm_contact.id = civicrm_participant.contact_id
     INNER JOIN {$config->getTeamMemberDataCustomGroupTableName()} team_member_data ON team_member_data.entity_id = civicrm_participant.id
@@ -182,8 +183,10 @@ class CRM_Generic_Tokens_MissingTeamInformation extends CRM_Generic_Tokens_Token
     WHERE civicrm_contact.is_deleted = '0'
     AND civicrm_participant.status_id IN (".implode(", ", $config->getActiveParticipantStatusIds()).")
     AND team_participant.id = %1
+    AND civicrm_participant.event_id = %2
      ";
     $params[1] = array($participant_id, 'Integer');
+    $params[2] = array($event_id, 'Integer');
     $dao = CRM_Core_DAO::executeQuery($sql, $params);
     while ($dao->fetch()) {
       $missing_contact_info = array();
@@ -214,14 +217,17 @@ class CRM_Generic_Tokens_MissingTeamInformation extends CRM_Generic_Tokens_Token
       if (!$dao->role) {
         $missing_contact_info[] = ts('functie');
       }
-      if ($dao->show_on_website === null) {
-        $missing_contact_info[] = ts('zichtbaar op de website');
-      }
       if (!$dao->waarschuw_in_nood) {
         $missing_contact_info[] = ts('waarschuwen in geval van nood');
       }
       if (!$dao->telefoon_in_nood) {
         $missing_contact_info[] = ts('telefoonnummer in geval van nood');
+      }
+      if (!$dao->verzekeringsnummer) {
+        $missing_contact_info[] = ts('verzekeringsnummer');
+      }
+      if (!$dao->bijzonderheden) {
+        $missing_contact_info[] = ts('bijzonderheden');
       }
       if (count($missing_contact_info)) {
         $missing_information[] = 'Teamlid "'.$dao->display_name.'" mist de volgende gegevens: '.implode(", ", $missing_contact_info);

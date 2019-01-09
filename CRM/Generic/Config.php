@@ -10,6 +10,10 @@ class CRM_Generic_Config {
   private $_iceWaarschuwInGevalVanNoodCustomFieldColumnName;
   private $_iceTelefoonInGevalVanNoodCustomFieldId;
   private $_iceTelefoonInGevalVanNoodCustomFieldColumnName;
+  private $_iceVerzekeringsnummerCustomFieldId;
+  private $_iceVerzekeringsnummerCustomFieldColumnName;
+  private $_iceBijzonderhedenCustomFieldId;
+  private $_iceBijzonderhedenCustomFieldColumnName;
 	private $_teamcaptainTeamportalCustomGroupId;
 	private $_teamcaptainTeamportalCustomGroupTableName;
 	private $_teamcaptainTeamportalAccessFieldId;
@@ -499,6 +503,34 @@ class CRM_Generic_Config {
   public function getICETelefoonInGevalVanNoodCustomFieldColumnName() {
     return $this->_iceTelefoonInGevalVanNoodCustomFieldColumnName;
   }
+
+  /**
+   * Getter for the custom field id of the custom field Verzekeringsnummer.
+   */
+  public function getICEVerzekeringsnummerCustomFieldId() {
+    return $this->_iceVerzekeringsnummerCustomFieldId;
+  }
+
+  /**
+   * Getter for the custom field column name of the custom field Verzekeringsnummer.
+   */
+  public function getICEVerzekeringsnummerCustomFieldColumnName() {
+    return $this->_iceVerzekeringsnummerCustomFieldColumnName;
+  }
+
+  /**
+   * Getter for the custom field id of the custom field Bijzonderheden.
+   */
+  public function getICEBijzonderhedenCustomFieldId() {
+    return $this->_iceBijzonderhedenCustomFieldId;
+  }
+
+  /**
+   * Getter for the custom field column name of the custom field Bijzonderheden.
+   */
+  public function getICEBijzonderhedenCustomFieldColumnName() {
+    return $this->_iceBijzonderhedenCustomFieldColumnName;
+  }
 	
 	/**
 	 * Getter for the custom group id of the custom group 'roparun event'.
@@ -608,6 +640,22 @@ class CRM_Generic_Config {
     } catch (Exception $ex) {
       throw new Exception('Could not find custom field teamcaptain_teamportal_access');
     }
+
+    try {
+      $_verzekersnummerCustomField = civicrm_api3('CustomField', 'getsingle', array('name' => 'Verzekeringsnummer', 'custom_group_id' => $this->_iceCustomGroupId));
+      $this->_iceVerzekeringsnummerCustomFieldColumnName = $_verzekersnummerCustomField['column_name'];
+      $this->_iceVerzekeringsnummerCustomFieldId = $_verzekersnummerCustomField['id'];
+    } catch (Exception $ex) {
+      throw new Exception('Could not find custom field teamcaptain_teamportal_access');
+    }
+    try {
+      $_BijzonderhedenCustomField = civicrm_api3('CustomField', 'getsingle', array('name' => 'Bijzonderheden', 'custom_group_id' => $this->_iceCustomGroupId));
+      $this->_iceBijzonderhedenCustomFieldColumnName = $_BijzonderhedenCustomField['column_name'];
+      $this->_iceBijzonderhedenCustomFieldId = $_BijzonderhedenCustomField['id'];
+    } catch (Exception $ex) {
+      throw new Exception('Could not find custom field teamcaptain_teamportal_access');
+    }
+
 
 
     try {
