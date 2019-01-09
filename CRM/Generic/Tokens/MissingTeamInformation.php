@@ -111,7 +111,7 @@ class CRM_Generic_Tokens_MissingTeamInformation extends CRM_Generic_Tokens_Token
     ";
     $params[1] = array($participant_id, 'Integer');
     $averageSpeed = CRM_Core_DAO::singleValueQuery($sql, $params);
-    if ($averageSpeed) {
+    if ($averageSpeed && $averageSpeed > 0.00) {
       unset($missing_information['average_speed']);
     }
   }
