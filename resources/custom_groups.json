@@ -306,7 +306,7 @@
         "is_view": "0",
         "note_columns": "100",
         "note_rows": "10",
-        "column_name": "team_membership",
+        "column_name": "motivation",
         "in_selector": "0"
       },
       "target_dontaions": {
