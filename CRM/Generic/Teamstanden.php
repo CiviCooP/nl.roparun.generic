@@ -13,6 +13,7 @@ class CRM_Generic_Teamstanden {
 	  $config = CRM_Generic_Config::singleton();
 		$financialTypeIds[] = $config->getDonatieFinancialTypeId();
 		$financialTypeIds[] = $config->getCollecteFinancialTypeId();
+    $financialTypeIds[] = $config->getVeilingFinancialTypeId();
 		$financialTypeIds[] = $config->getLoterijFinancialTypeId();
     $financialTypeIds[] = $config->getSmsDonatieFinancialTypeId();
     return self::getTotalAmount_perFinancialType($campaign_id, $financialTypeIds);
@@ -31,6 +32,7 @@ class CRM_Generic_Teamstanden {
 	  $config = CRM_Generic_Config::singleton();
 		$financialTypeIds[] = $config->getDonatieFinancialTypeId();
 		$financialTypeIds[] = $config->getCollecteFinancialTypeId();
+    $financialTypeIds[] = $config->getVeilingFinancialTypeId();
 		$financialTypeIds[] = $config->getLoterijFinancialTypeId();
 		$financialTypeIds[] = $config->getSmsDonatieFinancialTypeId();
     return self::getTotalAmountForRoparun_perFinancialType($campaign_id, $financialTypeIds);
@@ -69,6 +71,7 @@ class CRM_Generic_Teamstanden {
 			$financialTypeIds[] = $config->getDonatieFinancialTypeId();
 			if (!$onlyDonations) {
 				$financialTypeIds[] = $config->getCollecteFinancialTypeId();
+        $financialTypeIds[] = $config->getVeilingFinancialTypeId();
 				$financialTypeIds[] = $config->getLoterijFinancialTypeId();
         $financialTypeIds[] = $config->getSmsDonatieFinancialTypeId();
 			}
@@ -105,6 +108,7 @@ class CRM_Generic_Teamstanden {
 	  $config = CRM_Generic_Config::singleton();
 		$financialTypeIds[] = $config->getDonatieFinancialTypeId();
 		$financialTypeIds[] = $config->getCollecteFinancialTypeId();
+    $financialTypeIds[] = $config->getVeilingFinancialTypeId();
 		$financialTypeIds[] = $config->getLoterijFinancialTypeId();
 		$financialTypeIds[] = $config->getSmsDonatieFinancialTypeId();
     return self::getTotalAmountForTeam_perFinancialType($team_id, $campaign_id, $financialTypeIds);
@@ -196,6 +200,19 @@ class CRM_Generic_Teamstanden {
 		$financialTypeIds[] = $config->getCollecteFinancialTypeId();
 		return self::getTotalAmount_perFinancialType($campaign_id, $financialTypeIds);
 	}
+
+  /**
+   * Returns the total amount donated for a collecte.
+   *
+   * @param int $campaign_id
+   * 	The ID of the campaign.
+   * @return float
+   */
+  public static function getTotalAmountVeiling($campaign_id) {
+    $config = CRM_Generic_Config::singleton();
+    $financialTypeIds[] = $config->getVeilingFinancialTypeId();
+    return self::getTotalAmount_perFinancialType($campaign_id, $financialTypeIds);
+  }
   
   /**
    * Returns the total amount donated by sms.
@@ -254,6 +271,19 @@ class CRM_Generic_Teamstanden {
 		$financialTypeIds[] = $config->getCollecteFinancialTypeId();
 		return self::getTotalAmountForRoparun_perFinancialType($campaign_id, $financialTypeIds);
 	}
+
+  /**
+   * Returns the total amount donated for a loterij on name of roparun.
+   *
+   * @param int $campaign_id
+   * 	The ID of the campaign.
+   * @return float
+   */
+  public static function getTotalAmountVeilingForRoparun($campaign_id) {
+    $config = CRM_Generic_Config::singleton();
+    $financialTypeIds[] = $config->getVeilingFinancialTypeId();
+    return self::getTotalAmountForRoparun_perFinancialType($campaign_id, $financialTypeIds);
+  }
 
 /**
    * Returns the total amount donated by sms on name of roparun.
@@ -316,6 +346,21 @@ class CRM_Generic_Teamstanden {
 		$financialTypeIds[] = $config->getCollecteFinancialTypeId();
 		return self::getTotalAmountForTeam_perFinancialType($team_id, $campaign_id, $financialTypeIds);
 	}
+
+  /**
+   * Returns the total amount donated for a team and a campaign.
+   *
+   * @param int $team_id
+   * 	The contact id of the team
+   * @param int $campaign_id
+   * 	The ID of the campaign.
+   * @return float
+   */
+  public static function getTotalAmountDonatedForTeam_Veiling($team_id, $campaign_id) {
+    $config = CRM_Generic_Config::singleton();
+    $financialTypeIds[] = $config->getVeilingFinancialTypeId();
+    return self::getTotalAmountForTeam_perFinancialType($team_id, $campaign_id, $financialTypeIds);
+  }
 
   /**
    * Returns the total amount donated for a team and a campaign by sms.

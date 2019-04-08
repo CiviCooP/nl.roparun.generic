@@ -36,6 +36,7 @@ class CRM_Generic_Config {
 	private $_towardsTeamMemberCustomFieldColumnName;
 	private $_donatieFinancialTypeId;
 	private $_collecteFinancialTypeId;
+	private $_veilingFinancialTypeId;
 	private $_loterijFinancialTypeId;
   private $_smsDonatieFinancialTypeId;
 	private $_completedContributionStatusId;
@@ -433,6 +434,13 @@ class CRM_Generic_Config {
 	public function getCollecteFinancialTypeId() {
 		return $this->_collecteFinancialTypeId;
 	}
+
+  /**
+   * Getter for veiling financial type id.
+   */
+  public function getVeilingFinancialTypeId() {
+    return $this->_veilingFinancialTypeId;
+  }
 	
 	/**
 	 * Getter for loterij financial type id.
@@ -600,6 +608,14 @@ class CRM_Generic_Config {
 		} catch (Exception $e) {
 			throw new Exception('Could not retrieve financial type Opbrengst collecte');
 		}
+    try {
+      $this->_veilingFinancialTypeId = civicrm_api3('FinancialType', 'getvalue', array(
+        'name' => 'Opbrengst veiling',
+        'return' => 'id',
+      ));
+    } catch (Exception $e) {
+      throw new Exception('Could not retrieve financial type Opbrengst veiling');
+    }
 		try {
 			$this->_loterijFinancialTypeId = civicrm_api3('FinancialType', 'getvalue', array(
 				'name' => 'Opbrengst loterij',
